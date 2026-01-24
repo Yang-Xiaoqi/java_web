@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.ClazzMapper">
+    <update id="update">
+        update clazz
+        <set>
+            name = #{name},
+            room = #{room},
+            begin_date=#{beginDate},
+            end_date=#{endDate},
+            master_id=#{masterId},
+            update_time=#{updateTime},
+            <if test="subject!=null">
+                subject=#{subject}
+            </if>
+        where id = #{id}
+        </set>
+    </update>
+    <!--   分页查询班级列表-->
+    <select id="list" resultType="org.example.pojo.Clazz">
+        select clazz.*,emp.name as masterName,
+        (
+        CASE
+        WHEN NOW() &gt; clazz.end_date THEN '已结课'
+        WHEN NOW() &lt; clazz.begin_date THEN '未开班'
+        ELSE '在读中'
+        END
+        ) AS status
+        from clazz left join emp on clazz.master_id=emp.id
+        <where>
+            <if test="name!=null and name!=''">
+                and clazz.name like concat('%',#{name},'%')
+            </if>
+            <if test="begin!=null and end!=null">
+                and end_date between #{begin} and #{end}
+            </if>
+        </where>
+        order by update_time desc
+    </select>
+</mapper>
