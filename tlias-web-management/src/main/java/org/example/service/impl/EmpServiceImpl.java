@@ -2,6 +2,7 @@ package org.example.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.example.mapper.EmpExprMapper;
 import org.example.mapper.EmpLogMapper;
 import org.example.mapper.EmpMapper;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @Service
 public class EmpServiceImpl implements EmpService {
     @Autowired
@@ -123,6 +125,19 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public List<Emp> list() {
         return empMapper.selectEmp();
+    }
+
+    @Override
+    public LoginInfo login(Emp emp) {
+        //1.调用mapper接口，根据用户名和密码查询员工信息
+        Emp e = empMapper.selectByUsernameAndPassword(emp);
+        //2.判断是否存在这个员工，组装登陆成功信息
+        if (e != null) {
+            log.info("登陆成功,员工信息:{}", e);
+            return new LoginInfo(e.getId(), e.getUsername(), e.getName(), "");
+        }
+        //3.不存在，返回null
+        return null;
     }
 
 

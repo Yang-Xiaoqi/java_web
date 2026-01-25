@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.pojo.Emp;
 import org.example.pojo.EmpQueryParam;
+import org.example.pojo.LoginInfo;
 import org.example.pojo.PageResult;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,11 @@ public interface EmpService {
     void update(Emp emp);
 
     List<Emp> list();
+
+    /**
+     * 登录
+     */
+    LoginInfo login(Emp emp);
 
 //    PageResult<Emp> page(Integer page, Integer pageSize, String name, Integer gender, LocalDate begin, LocalDate end);
 
