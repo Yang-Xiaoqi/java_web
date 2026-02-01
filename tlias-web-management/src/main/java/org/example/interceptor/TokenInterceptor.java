@@ -1,0 +1,47 @@
+package org.example.interceptor;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.example.utils.JwtUtils;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+@Slf4j
+@Component
+public class TokenInterceptor implements HandlerInterceptor {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+        //获取到请求的路径
+        String requestURI = request.getRequestURI();
+        //是否是登录请求，如果路径中包含/login,放行
+        if (requestURI.contains("login")) {
+            log.info("登陆操作，放行");
+            return true;
+        }
+
+        //获取请求头中的token
+        String token = request.getHeader("token");
+
+
+        //判断token是否存在，不存在返回错误信息，响应401状态码
+        if (token == null || token.isEmpty()) {
+            log.info("令牌为空");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return false;
+        }
+
+        //令牌token存在，校验失败，返回错误信息(响应401)
+        try {
+            JwtUtils.parseToken(token);
+        } catch (Exception e) {
+            log.info("令牌非法");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return false;
+        }
+        //校验通过 放行
+        log.info("令牌合法，放行");
+        return true;
+    }
+}

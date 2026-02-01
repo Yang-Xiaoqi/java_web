@@ -9,6 +9,7 @@ import org.example.mapper.EmpMapper;
 import org.example.pojo.*;
 import org.example.service.EmpLogService;
 import org.example.service.EmpService;
+import org.example.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -134,7 +137,11 @@ public class EmpServiceImpl implements EmpService {
         //2.判断是否存在这个员工，组装登陆成功信息
         if (e != null) {
             log.info("登陆成功,员工信息:{}", e);
-            return new LoginInfo(e.getId(), e.getUsername(), e.getName(), "");
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("id", e.getId());
+            claims.put("username", e.getUsername());
+             String jwt =JwtUtils.generateToken(claims);
+            return new LoginInfo(e.getId(), e.getUsername(), e.getName(), jwt);
         }
         //3.不存在，返回null
         return null;
