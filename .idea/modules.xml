@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/springboot-aop-quickstart/springboot-aop-quickstart.iml" filepath="$PROJECT_DIR$/springboot-aop-quickstart/springboot-aop-quickstart.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tlias-web-management/tlias-web-management.iml" filepath="$PROJECT_DIR$/tlias-web-management/tlias-web-management.iml" />
       <module fileurl="file://$PROJECT_DIR$/web-ai-projiect2.iml" filepath="$PROJECT_DIR$/web-ai-projiect2.iml" />
     </modules>
   </component>

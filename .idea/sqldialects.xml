@@ -5,6 +5,7 @@
     <file url="file://$PROJECT_DIR$/tlias-web-management/src/main/java/org/example/mapper/DeptMapper.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/tlias-web-management/src/main/java/org/example/mapper/EmpLogMapper.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/tlias-web-management/src/main/java/org/example/mapper/EmpMapper.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/tlias-web-management/src/main/java/org/example/mapper/OperateLogMapper.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/tlias-web-management/src/main/java/org/example/mapper/StuMapper.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/tlias-web-management/src/main/resources/org/example/mapper/ClazzMapper.xml" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/tlias-web-management/src/main/resources/org/example/mapper/EmpExprMapper.xml" dialect="GenericSQL" />

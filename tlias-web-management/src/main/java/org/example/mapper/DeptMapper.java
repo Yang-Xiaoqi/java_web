@@ -36,6 +36,6 @@ public interface DeptMapper {
     @Select("select id,name,create_time,update_time from dept where id = #{id}")
     Dept getById(Integer id);
 
-    @Update("update dept set name=#{name},update_time=#{updateTime} where dept_id = #{id}")
+    @Update("update dept set name=#{name},update_time=#{updateTime} where id = #{id}")
     void update(Dept dept);
 }

@@ -1,11 +1,13 @@
 package org.example.filter;
 
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.example.utils.CurrentHolder;
 import org.example.utils.JwtUtils;
 
 import java.io.IOException;
@@ -41,7 +43,10 @@ public class TokenFilter implements Filter {
 
         //令牌token存在，校验失败，返回错误信息(响应401)
         try {
-            JwtUtils.parseToken(token);
+            Claims claims=JwtUtils.parseToken(token);
+            Integer empId =Integer.valueOf(claims.get("id").toString());
+            CurrentHolder.setCurrentId(empId);
+            log.info("当前登录员工ID：{}，将其存入ThreadLocal",empId);
         } catch (Exception e) {
             log.info("令牌非法");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -50,5 +55,8 @@ public class TokenFilter implements Filter {
         //校验通过 放行
         log.info("令牌合法，放行");
         filterChain.doFilter(request, response);
+
+        //删除ThreadLocal中的数据
+        CurrentHolder.remove();
     }
 }
